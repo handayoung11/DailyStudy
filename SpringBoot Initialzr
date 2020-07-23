@@ -1,0 +1,36 @@
+spring-boot 프로그램 실행해보기
+
+1. https://start.spring.io/ ---> 이 사이트에서 설정을 하면 된다.
+  설정해야 할 것                                  내가 선택한 사항
+  Maven을 사용할 것인지, Gradle을 사용할 것인지 --- Gradle
+  Language - Java, Kotlin, Grovy              --- Java
+  Spring Boot Version                         --- 2.3.1
+  Java Version                                --- 11
+  Project Metadata                            --- 적당히 잘~~~
+  Dependencies                                --- Spring Web, Thymeleaf
+ 2. Generate라는 버튼을 누르면 설정한 파일을 다운로드 받을 수 있다.
+ 3. 다운로드된 파일은 압축되어 있으니 압축을 해제하고 Import를 한다. --- 참고로 IntelliJ를 사용하였다.
+ 4. Project명 - src - main - java 밑에 있는 자바 파일을 실행시킨다.
+ 5. 아무 설정도 안 하고 localhost:8080으로 접속하여 WhiteLabel ErrorPage가 나오면 환경 구축 완료!!!!
+ 
+ 
+ 
+ 
+ 
+ 환경구축에 대한 여담
+ 요즘 개발환경에서는 Maven보다는 Gradle을 많이 사용한다.
+ Maven과 Gradle 모두 외부 라이브러리를 자동으로 관리해주기 위해 사용하는 것이다. 
+ 그런데 요즘 추세는 Gradle로 넘어오고 있다고 한다.
+ 
+ 외부 라이브러리(External Libraries)를 보면 굉장히 많다.
+ 분명히 나는 Spring Web과 Thymeleaf만 추가했는데 왜 이렇게 됐을까?????
+ 위 2개의 Dependency가 끌어당긴 외부 라이브러리 덕분에 굉장히 많아진 것이다!!!
+ 
+ 내가 다니는 학원에서 배운 웹프로젝트는 Apache나 IIS(Internet Information Service)를 이용해 서버를 설정해주어야 했다.
+ 그런데 이 Spring Boot라는 친구는 서버 설정을 해주지 않고, main 메서드를 찾아서 실행시켜준 것만으로 서버가 만들어지는 것을 볼 수 있었다.
+ 매우 편하고 신기했다. 이유는 무엇인가 하니, 내가 추가한 Dependency 중 Spring Web은 tomcat을 내장하고 있었다!!!!(tymeleaf도 가지고 있었다.)
+ 어쨌든 내가 Spring Web만 추가하면, 내장된 Tomcat에 의해서 알아서 서버설정이 된다는 사실!!!!! 놀랍지 아니한가???
+ 요즘은 서버 프로그램을 통해서 서버를 관리하기보다는 이런 식으로 프로젝트가 알아서 내장해서 실행한다고 한다.
+ 포트는 기본적으로 8080으로 설정되어 있다. localhost:8080으로 접속하면 된다.
+ 아직 코드는 한 줄도 안 짰는데 웹 서버가 완성되어 있고, 의존성 관리가 끝나있다는 것이 굉장히 놀랍고 편했다.
+ Spring Boot가 기대되고, 빨리 내일이 와서 강의를 들었으면 좋겠당~~~~~~
