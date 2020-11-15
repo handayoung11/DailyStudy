@@ -6,7 +6,7 @@ Web FrontEnd = Client Side
 Web FrontEnd의 역할
 웹 콘텐츠를 잘 보여주기 위해 구조를 만들어야 한다.
 적절한 배치와 일관된 디자인을 제공해야 한다.
-사용자 요청을 잘 반영해야 한다.
+사용자 요청을 잘 반영해야 한다
 
 Web Page를 위한 언어
 1. HTML(HyperText Markup Language) - 뼈대
