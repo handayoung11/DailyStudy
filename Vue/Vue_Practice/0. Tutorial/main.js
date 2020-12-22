@@ -1,3 +1,4 @@
+Vue.config.devtools = true;
 Vue.component("product", {
 	template: `
 	<div class="product">
@@ -27,7 +28,21 @@ Vue.component("product", {
 						v-if="onCart != 0 && onCart != undefined"
 						class="delete"
                         :class="{ disabledButton: !inStock }">Remove from Cart</button>
-            </div>
+			</div>
+			
+			<div>
+				<h2>Reviews</h2>
+				<p v-if="!reviews.length"> There are no reviews yet.</p>
+				<ul>
+					<li v-for="review in reviews">
+						<p>{{review.name}}</p>
+						<p>Rating: {{review.rating}}</p>
+						<p>{{review.review}}</p>
+						<p>{{review.recommended}}</p>
+					</li>
+				</ul>
+			</div>
+			<product-review @review-submitted="addReview"></product-review>
         </div>
 	`,
 	props: {
@@ -60,6 +75,7 @@ Vue.component("product", {
 					variantQuantity: 3,
 				},
 			],
+			reviews: [],
 		};
 	},
 	methods: {
@@ -79,6 +95,9 @@ Vue.component("product", {
 		updateProduct(index) {
 			this.selectedVariant = index;
 		},
+		addReview(productReview) {
+			this.reviews.push(productReview);
+		},
 	},
 	computed: {
 		onCart() {
@@ -95,6 +114,69 @@ Vue.component("product", {
 		},
 		inStock() {
 			return this.variants[this.selectedVariant].variantQuantity;
+		},
+	},
+});
+
+Vue.component("product-review", {
+	template: `<form class="review-form" @submit.prevent="onSubmit">
+		<p v-if="errors.length">
+			<b>Please correct the following error(s):</b>
+			<ul>
+				<li v-for="error in errors">{{ error }}</li>
+			</ul>
+		</p>
+		<p>
+			<label for="name">Name:</label>
+			<input id="name" v-model="name"/>
+		</p>
+		<p>
+			<label for="review">Review:</label>
+			<textarea id='review' v-model="review"/></textarea>
+		</p>
+		<p>
+			<label for="rating">Rating:</label>
+			<select id='rating' v-model.number='rating'>
+				<option v-for='value in 5'>{{6 - value}}</option>
+			</select>
+		</p>
+		<p>
+			<b>Would you recommend this product?</b><br>
+			<input id="yesRec" type="radio" name="recommend" class="recommend-radio" v-model="recommended" value="recommended"/>
+			<label for="yesRec">Yes</label>
+			<input id="noRec" type="radio" name="recommend" class="recommend-radio" v-model="recommended" value="not recommended"/>
+			<label for="noRec">No</label>
+		</p>
+		<p>
+			<input type="submit" value="Submit" />
+		</p>
+	</form>
+	`,
+	data() {
+		return {
+			name: null,
+			review: null,
+			rating: null,
+			recommended: null,
+			errors: [],
+			required: ["name", "review", "rating", "recommended"],
+		};
+	},
+	methods: {
+		onSubmit() {
+			const productReview = {};
+			this.errors.length = 0;
+			for (const key of this.required) {
+				const data = this[key];
+				if (!data) {
+					this.errors.push(key + " required.");
+					continue;
+				}
+				productReview[key] = data;
+			}
+			if (this.errors.length) return;
+			for (const key of this.required) this[key] = null;
+			this.$emit("review-submitted", productReview);
 		},
 	},
 });

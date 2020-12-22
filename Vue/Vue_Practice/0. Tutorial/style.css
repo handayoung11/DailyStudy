@@ -61,6 +61,11 @@ button {
     width: 150px;
 }
 
+.recommend-radio{
+    width: auto;
+    height: auto;
+}
+
 .disabledButton {
     background-color: #d8d8d8;
 }
