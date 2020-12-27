@@ -9,8 +9,14 @@ Vue.component("product", {
                 <h1>{{title}}</h1>
                 <p v-if="inStock">In Stock</p>
 				<p v-else :style="!inStock?'text-decoration:line-through': ''">Out of Stock</p>
-				<p>Shipping: {{premium?'free':'$2.99'}}</p>
-                <ul>
+				<span v-for="(tab, index) in tabs"
+					:class="{ activeTab: selectedTab===tab }"
+					@click="selectedTab=tab"
+				>
+					{{tab}}
+				</span>
+				<p v-show="selectedTab===this.tabs[0]">Shipping: {{premium?'free':'$2.99'}}</p>
+                <ul v-show="selectedTab===this.tabs[1]">
                     <li v-for="detail in details">{{ detail }}</li>
                 </ul>
 
@@ -26,23 +32,10 @@ Vue.component("product", {
 						:class="{ disabledButton: !inStock }">Add to Cart</button>
 				<button @click="addToCart(false)" 
 						v-if="onCart != 0 && onCart != undefined"
-						class="delete"
-                        :class="{ disabledButton: !inStock }">Remove from Cart</button>
+						class="delete"">Remove from Cart</button>
 			</div>
 			
-			<div>
-				<h2>Reviews</h2>
-				<p v-if="!reviews.length"> There are no reviews yet.</p>
-				<ul>
-					<li v-for="review in reviews">
-						<p>{{review.name}}</p>
-						<p>Rating: {{review.rating}}</p>
-						<p>{{review.review}}</p>
-						<p>{{review.recommended}}</p>
-					</li>
-				</ul>
-			</div>
-			<product-review @review-submitted="addReview"></product-review>
+			<product-tabs></product-tabs>
         </div>
 	`,
 	props: {
@@ -76,6 +69,8 @@ Vue.component("product", {
 				},
 			],
 			reviews: [],
+			tabs: ["Shipping", "Details"],
+			selectedTab: "Shipping",
 		};
 	},
 	methods: {
@@ -94,9 +89,6 @@ Vue.component("product", {
 		},
 		updateProduct(index) {
 			this.selectedVariant = index;
-		},
-		addReview(productReview) {
-			this.reviews.push(productReview);
 		},
 	},
 	computed: {
@@ -159,6 +151,7 @@ Vue.component("product-review", {
 			rating: null,
 			recommended: null,
 			errors: [],
+			// 요구되는 필드 값들의 이름
 			required: ["name", "review", "rating", "recommended"],
 		};
 	},
@@ -166,6 +159,8 @@ Vue.component("product-review", {
 		onSubmit() {
 			const productReview = {};
 			this.errors.length = 0;
+
+			// 요구되는 데이터가 없을 경우 errors에 메시지 push
 			for (const key of this.required) {
 				const data = this[key];
 				if (!data) {
@@ -180,6 +175,48 @@ Vue.component("product-review", {
 		},
 	},
 });
+
+Vue.component("product-tabs", {
+	template: `
+		<div>
+			<span class="tab"
+				:class="{activeTab: selectedTab === tab}"
+				v-for="(tab, index) in tabs" :key="index"
+				@click="selectedTab=tab">
+				{{ tab }}</span>
+
+				<div v-show="selectedTab === 'Reviews'">
+					<h2>Reviews</h2>
+					<p v-if="!reviews.length"> There are no reviews yet.</p>
+					<ul>
+						<li v-for="review in reviews">
+							<p>{{review.name}}</p>
+							<p>Rating: {{review.rating}}</p>
+							<p>{{review.review}}</p>
+							<p>{{review.recommended}}</p>
+						</li>
+					</ul>
+				</div>
+
+				<div v-show="selectedTab === 'Make a Review'">
+					<product-review @review-submitted="addReview"></product-review>
+				</div>
+		</div>
+	`,
+	methods: {
+		addReview(productReview) {
+			this.reviews.push(productReview);
+		},
+	},
+	data() {
+		return {
+			tabs: ["Reviews", "Make a Review"],
+			selectedTab: "Reviews",
+			reviews: [],
+		};
+	},
+});
+
 const app = new Vue({
 	el: "#app",
 	data: {
