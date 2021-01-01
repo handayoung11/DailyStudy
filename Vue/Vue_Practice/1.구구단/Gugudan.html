@@ -9,7 +9,41 @@
 </head>
 <body>
     <div id="root">
-
+        <div>
+            <div>{{first}}곱하기 {{second}}는?</div>
+        </div>
+        <form action="" @submit="onSubmitForm">
+            <input type="number" ref="answer" v-model="value">
+            <button type="submit">입력</button>
+            <div>{{result}}</div>
+        </form>
     </div>
+    <script>
+        const app = new Vue({
+            el: '#root',
+            data: {
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value:'',
+                result:'',
+            },
+            methods: {
+                onSubmitForm(e) {
+                    e.preventDefault();
+                    if(this.first * this.second == this.value){
+                        this.result = '정답';
+                        this.first = Math.ceil(Math.random() * 9);
+                        this.second = Math.ceil(Math.random() * 9);
+                        this.value = '';
+                    }
+                    else {
+                        this.result = '땡';
+                        this.value = '';
+                    }
+                    this.$refs.answer.focus();
+                },
+            },
+        });
+    </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ Vue.component("product", {
                 <p v-if="inStock">In Stock</p>
 				<p v-else :style="!inStock?'text-decoration:line-through': ''">Out of Stock</p>
 				<span v-for="(tab, index) in tabs"
+					class="tab"
 					:class="{ activeTab: selectedTab===tab }"
 					@click="selectedTab=tab"
 				>
