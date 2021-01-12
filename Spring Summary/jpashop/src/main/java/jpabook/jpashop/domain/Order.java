@@ -1,5 +1,7 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,13 +24,16 @@ public class Order {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name="member_id")
+    @JsonBackReference
     private Member member;
 
     @OneToMany(mappedBy = "order", cascade = ALL)
+    @JsonManagedReference
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(fetch = LAZY, cascade = ALL)
     @JoinColumn(name = "delivery_id")
+    @JsonManagedReference
     private Delivery delivery;
 
     private LocalDateTime orderDate;
