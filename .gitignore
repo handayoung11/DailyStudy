@@ -17,7 +17,7 @@ bin/
 !**/src/test/**/bin/
 **/node_modules/
 ### IntelliJ IDEA ###
-.idea
+**/.idea/
 *.iws
 *.iml
 *.ipr
@@ -26,14 +26,14 @@ out/
 !**/src/test/**/out/
 
 ### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
 
 ### VS Code ###
-.vscode/
+**/.vscode/
 
-target/*
-.settings/*
+**/target/*
+**/.settings/*
