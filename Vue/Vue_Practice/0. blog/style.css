@@ -1,0 +1,14 @@
+body {
+    font-family: tahoma;
+    color:#282828;
+    margin: 0px;
+}
+
+#app {
+    margin: 5px;
+}
+.nav-bar {
+    background: linear-gradient(-90deg, #ffcdcd, #e05b5b);
+    height: 60px;
+    margin-bottom: 15px;
+}
