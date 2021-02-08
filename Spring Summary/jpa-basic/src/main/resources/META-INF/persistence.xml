@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="hello">  <!-- 보통 database당 하나씩 만듦 -->
+        <properties>
+            <!-- 필수 속성 -->
+            <!-- javax는 다른 JPA 라이브러리를 사용해도 그대로 반영
+                 hibernate는 hibernate 전용 속성
+            -->
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/> <!-- 데이터베이스 드라이버 -->
+            <property name="javax.persistence.jdbc.user" value="sa"/> <!-- 데이터베이스 username -->
+            <property name="javax.persistence.jdbc.password" value=""/> <!-- 데이터베이스 password -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/> <!-- 데이터베이스 접근URL -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/> <!-- dialect설정에 따라서 JPA가 해당 SQL로 쿼리를 만들어준다 -->
+
+            <!-- 옵션 -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+        </properties>
+    </persistence-unit>
+</persistence>
