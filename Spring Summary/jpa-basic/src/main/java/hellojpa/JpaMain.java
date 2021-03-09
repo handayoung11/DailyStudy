@@ -17,28 +17,33 @@ public class JpaMain {
         tx.begin(); //트랜잭션 시작
 
         try {
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
+            Club club = new Club();
+            club.setName("프로그래밍부");
+            club.setDescription("재밌게 같이 코딩해봐요~~~");
+            em.persist(club);
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setTeam(team);
-            em.persist(member);
+            Student codeMania = new Student();
+            codeMania.setName("code-mania");
+            codeMania.setAge(21);
+            codeMania.setClub(club.getId());
+            em.persist(codeMania);
 
             em.flush();
             em.clear();
 
-            Member findMember = em.find(Member.class, member.getId());
-            Team findTeam = findMember.getTeam();
-            System.out.println("findTeam = " + findTeam.getName());
+            Student firstStudent = em.find(Student.class, codeMania.getId());
+            System.out.println("firstStudent = " + firstStudent);
+
+            Club clubOfFirstStudent = em.find(Club.class, firstStudent.getClub());
+            System.out.println("firstStudent = " + firstStudent.getName());
+            System.out.println("clubOfFirstStudent = " + clubOfFirstStudent.getName());
 
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
         } finally {
-            em.close(); //사용 후 반드시 닫아줘야 한다
+            em.close();
         }
-        emf.close(); //애플리케이션이 끝나면 EntityManagerFactory를 닫아줘야 한다.
+        emf.close();
     }
 }
