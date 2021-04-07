@@ -1,27 +1,30 @@
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Solution {
-//    정렬 K번째 수
-//    https://programmers.co.kr/learn/courses/30/lessons/42748?language=java
-    public int[] solution(int[] array, int[][] commands) {
-        int[] answer = new int[commands.length];
-        List<Integer> list = Arrays.stream(array).boxed().collect(Collectors.toList());
+//    정렬 가장 큰 수
+//    https://programmers.co.kr/learn/courses/30/lessons/42746
 
-        int i = 0;
-        for(int[] c : commands) {
-            List<Integer> cutList = list.subList(c[0] - 1, c[1]);
-            List<Integer> sortedList = cutList.stream().sorted().collect(Collectors.toList());
-            answer[i] = sortedList.get(c[2] - 1);
-//            System.out.println("sortedList = " + sortedList);
-            i++;
+    class StrComparator implements Comparator<String> {
+        @Override
+        public int compare(String o1, String o2) {
+            int sum1 = Integer.parseInt(o1 + o2);
+            int sum2 = Integer.parseInt(o2 + o1);
+            if(sum1 > sum2) return 1;
+            if(sum1 == sum2) return 0;
+            else return -1;
         }
-        return answer;
     }
 
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        solution.solution(new int[] {1,5,2,6,3,7,4}, new int[][]{{2,5,3}, {4,4,1}, {1,7,3}});
+    public String solution(int[] numbers) {
+        StringBuilder answer = new StringBuilder();
+        List<String> list = Arrays.stream(numbers).mapToObj(i -> i + "").sorted(new StrComparator()).collect(Collectors.toList());
+        Collections.reverse(list);
+        list.forEach(n -> answer.append(n));
+        if(answer.substring(0, 1).equals("0")) return "0";
+        return answer.toString();
     }
 }
