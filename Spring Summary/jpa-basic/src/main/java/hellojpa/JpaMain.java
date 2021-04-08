@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -28,13 +29,18 @@ public class JpaMain {
             codeMania.setClub(club);
             em.persist(codeMania);
 
+            Student codeLover = new Student();
+            codeLover.setName("code-lover");
+            codeLover.setAge(21);
+            codeLover.setClub(club);
+            em.persist(codeLover);
+
             em.flush();
             em.clear();
 
-            Student firstStudent = em.find(Student.class, codeMania.getId());
-            System.out.println("first student = " + firstStudent.getName());
-            System.out.println("club of first student = " + firstStudent.getClub().getName());
-
+            Club findClub = em.find(Club.class, club.getId());
+            List<Student> students = findClub.getStudents();
+            for(Student s:students) System.out.println(club.getName() + ": " + s.getName());
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

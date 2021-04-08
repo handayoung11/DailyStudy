@@ -11,11 +11,11 @@
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/> <!-- 데이터베이스 드라이버 -->
             <property name="javax.persistence.jdbc.user" value="sa"/> <!-- 데이터베이스 username -->
             <property name="javax.persistence.jdbc.password" value=""/> <!-- 데이터베이스 password -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/> <!-- 데이터베이스 접근URL -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/Desktop/private/h2/test"/> <!-- 데이터베이스 접근URL -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/> <!-- dialect설정에 따라서 JPA가 해당 SQL로 쿼리를 만들어준다 -->
 
             <!-- 옵션 -->
-            <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.show_sql" value="true"/> <!-- 쿼리를 보여주는 옵션 -->
             <property name="hibernate.format_sql" value="true"/> <!-- 쿼리를 format해주는 옵션 -->
             <property name="hibernate.use_sql_comments" value="true"/> <!-- 쿼리에 부가 설명을 추가해주는 옵션-->
