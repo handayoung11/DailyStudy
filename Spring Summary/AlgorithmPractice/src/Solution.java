@@ -1,19 +1,28 @@
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class Solution {
-//    정렬 가장 큰 수
-//    https://programmers.co.kr/learn/courses/30/lessons/42746
+class Solution {
 
-    public String solution(int[] numbers) {
-        StringBuilder answer = new StringBuilder();
-        Arrays.stream(numbers).mapToObj(i -> i + "")
-                .sorted((o1, o2) -> {
-                    int sum1 = Integer.parseInt(o1 + o2);
-                    int sum2 = Integer.parseInt(o2 + o1);
-                    return sum1 > sum2?-1:sum1==sum2?0:1;
-                }).collect(Collectors.toList())
-                .forEach(n -> answer.append(n));
-        return answer.charAt(0) == '0'?"0":answer.toString();
+//    H-Index
+//    https://programmers.co.kr/learn/courses/30/lessons/42747
+
+    public int solution(int[] citations) {
+        int size = citations.length;
+        int max = Collections.max(Arrays.stream(citations).boxed().collect(Collectors.toList()));
+        int answer = 0;
+
+        for(int h = max; h >= 0; h--) {
+            int quote = 0;
+            System.out.println("c = " + h);
+            for(int j : citations) if(j >= h) quote++;
+            if(quote >= h && size - quote <= h) {
+                answer = h;
+                break;
+            }
+        }
+
+        return answer;
     }
 }
