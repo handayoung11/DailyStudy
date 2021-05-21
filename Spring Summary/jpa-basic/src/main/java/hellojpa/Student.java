@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,8 +20,7 @@ public class Student {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "club")
-    private Club club;
-//    private Long club; // 원래 club Type
+    @ManyToMany
+    @JoinTable(name = "`JOIN`")
+    private List<Club> clubs = new ArrayList<>();
 }

@@ -16,6 +16,6 @@ public class Club {
     private Long id;
     private String name;
     private String description;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "club")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "clubs")
     private List<Student> students = new ArrayList<>();
 }

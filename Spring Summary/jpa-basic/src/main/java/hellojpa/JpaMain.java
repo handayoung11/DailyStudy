@@ -26,21 +26,9 @@ public class JpaMain {
             Student codeMania = new Student();
             codeMania.setName("code-mania");
             codeMania.setAge(21);
-            codeMania.setClub(club);
+            codeMania.getClubs().add(club);
             em.persist(codeMania);
 
-            Student codeLover = new Student();
-            codeLover.setName("code-lover");
-            codeLover.setAge(21);
-            codeLover.setClub(club);
-            em.persist(codeLover);
-
-            em.flush();
-            em.clear();
-
-            Club findClub = em.find(Club.class, club.getId());
-            List<Student> students = findClub.getStudents();
-            for(Student s:students) System.out.println(club.getName() + ": " + s.getName());
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
