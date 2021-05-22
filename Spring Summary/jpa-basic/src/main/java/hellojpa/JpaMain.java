@@ -18,19 +18,35 @@ public class JpaMain {
         tx.begin(); //트랜잭션 시작
 
         try {
-            Club club = new Club();
-            club.setName("프로그래밍부");
-            club.setDescription("재밌게 같이 코딩해봐요~~~");
-            em.persist(club);
+            Club coding = new Club();
+            coding.setName("프로그래밍부");
+            coding.setDescription("재밌게 같이 코딩해봐요~~~");
+            em.persist(coding);
+
+            Club swim = new Club();
+            swim.setName("수영부");
+            swim.setDescription("첨벙첨벙 즐거운 수영시간~~~");
+            em.persist(swim);
 
             Student codeMania = new Student();
             codeMania.setName("code-mania");
             codeMania.setAge(21);
-            codeMania.getClubs().add(club);
             em.persist(codeMania);
 
+            Join toCoding = new Join();
+            toCoding.setClub(coding);
+            toCoding.setStudent(codeMania);
+            em.persist(toCoding);
+
+            Join toSwim = new Join();
+            toSwim.setClub(swim);
+            toSwim.setStudent(codeMania);
+            em.persist(toSwim);
+
+            System.out.println("stu = " + codeMania.getJoins().size());
             tx.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             tx.rollback();
         } finally {
             em.close();
