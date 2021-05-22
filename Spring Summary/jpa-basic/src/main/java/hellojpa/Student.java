@@ -20,7 +20,6 @@ public class Student {
 
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "`JOIN`")
-    private List<Club> clubs = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    private List<Join> joins = new ArrayList<>();
 }
