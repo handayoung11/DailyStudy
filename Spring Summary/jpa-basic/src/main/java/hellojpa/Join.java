@@ -18,4 +18,14 @@ public class Join {
     @ManyToOne
     @JoinColumn(name = "student")
     private Student student;
+
+    public void joinClub(Club club){
+        this.club = club;
+        club.getJoins().add(this);
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+        student.getJoins().add(this);
+    }
 }
